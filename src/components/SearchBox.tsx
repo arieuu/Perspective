@@ -1,9 +1,12 @@
 import { SearchIcon } from "@chakra-ui/icons";
-import { Box, Flex, Input, InputGroup, InputRightElement } from "@chakra-ui/react";
+import { Box, Input, InputGroup, InputRightElement } from "@chakra-ui/react";
 import { useEffect, useRef } from "react";
 
+interface Props {
+    onSubmit: (name: string) => void;
+}
 
-function SearchBox() {
+function SearchBox({ onSubmit }: Props) {
 
     const inputReference = useRef<HTMLInputElement>(null); 
 
@@ -11,9 +14,17 @@ function SearchBox() {
         if(inputReference.current) inputReference.current.focus()
     }, []);
 
+
     return(
         <Box border="2 white solid" width="100%">
-            <form onSubmit={(event) => event.preventDefault()}>
+            <form onSubmit={(event) => {
+                event.preventDefault();                         // Preventing page from updating
+
+                if(inputReference.current) {
+                    onSubmit(inputReference.current.value);
+                    inputReference.current.value = ""           // Clean up the input after commiting
+                }
+            }}>
 
                 <InputGroup >
                     <Input ref={inputReference} size="lg" minWidth={5} placeholder="Name a country" focusBorderColor="none"/>

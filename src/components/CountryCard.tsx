@@ -1,13 +1,20 @@
 import { CloseIcon } from "@chakra-ui/icons";
 import { Card, CardBody, CardHeader, Heading, IconButton, Text } from "@chakra-ui/react";
 
+interface Props {
+    name: string;
+    onDelete: (name: string) => void;
+}
 
-function CountryCard() {
+function CountryCard({name, onDelete}: Props) {
     return(
-        <Card minWidth={50}>
+        <Card id="name">
             <CardHeader display="flex" justifyContent="space-between" alignItems="center">
-                <Heading as="h3" fontSize={20}> Saudi Arabia</Heading>
-                <IconButton icon={<CloseIcon />} aria-label="close" size="sm" />
+                <Heading as="h3" fontSize={20}> {name} </Heading>
+
+                { /* Use this button to execute the callback and delete the card */}
+
+                <IconButton onClick={() => onDelete(name)} icon={<CloseIcon />} aria-label="close" size="sm" />
                     
             </CardHeader>
 
