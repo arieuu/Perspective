@@ -16,7 +16,7 @@ function SearchBox() {
             <form onSubmit={(event) => event.preventDefault()}>
 
                 <InputGroup >
-                    <Input ref={inputReference} size="lg" minWidth={5} placeholder="Type a country name" focusBorderColor="none"/>
+                    <Input ref={inputReference} size="lg" minWidth={5} placeholder="Name a country" focusBorderColor="none"/>
 
                     <InputRightElement  marginTop={1}>
                         <button type="submit"><SearchIcon boxSize={5} my="auto" />  </button>
