@@ -1,4 +1,4 @@
-import { Flex, Heading, SimpleGrid, Text } from '@chakra-ui/react'
+import { Flex, Heading, SimpleGrid, Text, useToast } from '@chakra-ui/react'
 import './App.css'
 import SearchBox from './components/SearchBox'
 import { ViewIcon } from '@chakra-ui/icons'
@@ -10,9 +10,25 @@ function App() {
   const [countryNames, setCountryName] = useState<string[]>([]);
   const [focus, setFocus] = useState<boolean>(false);
 
+  const toast = useToast();
+
   // Callback functions to add cards and delete cards respectively. Both will change state
 
-  const onSubmit = (name: string) => setCountryName([...countryNames, name]);
+  const onSubmit = (name: string) => {
+
+    // Basic validation. If length is small or non-existent issue a warning
+
+    if(name.length > 1) {
+      setCountryName([...countryNames, name]);
+
+    } else if(name.length < 1) {
+      toast({
+        title: "Type something first",
+        status: "warning",
+        duration: 800
+      });
+    }
+  }
 
   /*
      When the user clicks to delete card this function will update the array of available country names to
@@ -23,6 +39,14 @@ function App() {
   const onDelete = (name: string) => {
     setCountryName([...countryNames].filter((value) => value != name)); // Filter the selected name out
     setFocus(true);
+
+    // Show a toast success message uppon deletion
+
+    toast({
+      title: name + " has been deleted",
+      status: "success",
+      duration: 1000
+    });
   }
 
   return (
