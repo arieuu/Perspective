@@ -4,15 +4,25 @@ import { useEffect, useRef } from "react";
 
 interface Props {
     onSubmit: (name: string) => void;
+    focus: boolean
 }
 
-function SearchBox({ onSubmit }: Props) {
+function SearchBox({ onSubmit, focus }: Props) {
 
     const inputReference = useRef<HTMLInputElement>(null); 
 
     useEffect(() => {
         if(inputReference.current) inputReference.current.focus()
     }, []);
+
+    // Check if this state changes to true, if so, that means a card has been deleted.
+    // We then return focus to this input (Since the user clicked away, we nee to get them into typing)
+
+    if(focus) {
+        if(inputReference.current) {
+            inputReference.current.focus();
+        }
+    }
 
 
     return(

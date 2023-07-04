@@ -12,7 +12,7 @@ function CountryCard({name, onDelete}: Props) {
             <CardHeader display="flex" justifyContent="space-between" alignItems="center">
                 <Heading as="h3" fontSize={20}> {name} </Heading>
 
-                { /* Use this button to execute the callback and delete the card */}
+                { /* We use this button to execute the callback and delete the card, as well as re-focus on input */ }
 
                 <IconButton onClick={() => onDelete(name)} icon={<CloseIcon />} aria-label="close" size="sm" />
                     
