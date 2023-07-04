@@ -9,6 +9,7 @@ import { useState } from 'react'
 function App() {
   const [countryNames, setCountryName] = useState<string[]>([]);
   const [focus, setFocus] = useState<boolean>(false);
+  const [numberOfCards, setNumberOfCards] = useState(0);
 
   const toast = useToast();
 
@@ -19,6 +20,9 @@ function App() {
     // Basic validation. If length is small or non-existent issue a warning
 
     if(name.length > 1) {
+      const num = numberOfCards + 1;
+      setNumberOfCards(num);
+
       setCountryName([...countryNames, name]);
 
     } else if(name.length < 1) {
@@ -36,8 +40,8 @@ function App() {
      and return focus to input so that the user can go right back to typing.
   */
 
-  const onDelete = (name: string) => {
-    setCountryName([...countryNames].filter((value) => value != name)); // Filter the selected name out
+  const onDelete = (cardId: string, name: string) => {
+    setCountryName([...countryNames].filter((value, index) => index.toString() != cardId)); // Filter the selected name out
     setFocus(true);
 
     // Show a toast success message uppon deletion
@@ -47,6 +51,25 @@ function App() {
       status: "success",
       duration: 1000
     });
+  }
+
+  const onEdit = (cardId: string, newName: string) => {
+    const newArray = countryNames.map((currentName, index) => {
+      if(index.toString() == cardId) {
+        return newName
+
+      } else {
+        return currentName
+      }
+    });
+
+    setCountryName(newArray)
+
+    toast({
+      title: "Edited successfully",
+      status: "success",
+      duration: 1000
+    })
   }
 
   return (
@@ -63,8 +86,8 @@ function App() {
       </Flex>
 
        <SimpleGrid columns={3} minChildWidth="200px" gap={3} width="100%" mt={10}>
-        {countryNames.map((name) => 
-          <CountryCard name={name} onDelete={onDelete} />  // Card component, we give it a name and a delete callback
+        {countryNames.map((name, index) => 
+          <CountryCard name={name} onDelete={onDelete} onEdit={onEdit} setFocus={setFocus} key={index} index={index}/>  // Card component, we give it a name and a delete callback
         )} 
       </SimpleGrid>
    </Flex>
