@@ -1,7 +1,7 @@
 import { CloseIcon, EditIcon } from "@chakra-ui/icons";
 import { Box, Button, Card, CardBody,  CardHeader,  Flex,  Heading, IconButton,  Input,
          Popover,  PopoverArrow,  PopoverBody,  PopoverCloseButton,  PopoverContent,  PopoverHeader,
-         PopoverTrigger,  Portal,  Text } from "@chakra-ui/react";
+         PopoverTrigger,  Portal,  Spinner,  Text } from "@chakra-ui/react";
 
 import { useEffect, useRef, useState } from "react";
 import axiosInstance from "../services/axios-instance";
@@ -32,11 +32,16 @@ function CountryCard({name, onDelete, onEdit, setFocus, index}: Props) {
 
     const editInputReference = useRef<HTMLInputElement>(null);
     const [countryData, setCountryData] = useState<Country>();
+    const [isLoading, setIsLoading]= useState(false);
 
     useEffect(() => {
+        setIsLoading(true)
         axiosInstance.get<Country[]>("name/" + name )
-        .then((response) => setCountryData(response.data[0])) // Return the first country found
-
+        .then((response) => {
+            setCountryData(response.data[0]); // Return the first country found
+            setIsLoading(false);
+        })
+        
         .catch(err => {
             if(err instanceof CanceledError) return; // Clean up in case of cancellation
             return
@@ -91,14 +96,18 @@ function CountryCard({name, onDelete, onEdit, setFocus, index}: Props) {
                     
             </CardHeader>
 
-            <CardBody>
+
+            <CardBody display="flex">
+                { isLoading && <Spinner justifySelf="center" alignSelf="center" marginX="auto"/>}
+                
+                { !isLoading && 
                 <Text>
-               Official: { countryData?.name.official} <br/> 
-               Capital: { countryData?.capital.map((c) => c + ", ")} <br/>
-               Population: {countryData?.population} <br/>
-               Continent: { countryData?.continents.map(c => c + " ") } <br/>
-               
+                    Official: { countryData?.name.official} <br/> 
+                    Capital: { countryData?.capital.map((c) => c + ", ")} <br/>
+                    Population: {countryData?.population} <br/>
+                    Continent: { countryData?.continents.map(c => c + " ") } <br/>
                </Text>
+                }
             </CardBody>
         </Card>
     )
