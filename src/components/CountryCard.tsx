@@ -21,6 +21,7 @@ interface Country {
     continents: string[];
     population: string;
     languages: object;          // The keys will not be known before hand, so we just use a generic object
+    area: number;
 }
 
 interface Name {
@@ -123,9 +124,9 @@ function CountryCard({name, onDelete, onEdit, setFocus, index}: Props) {
                     { /* Using the object.values method to get all the values in an array regardless of the keys,
                         and then iterating through that array to show the values. */ }
 
-                    Languages: {
-                        countryData?.languages && Object.values(countryData?.languages).map((key) => key + ", ")
-                    }
+                    Languages: { countryData?.languages && Object.values(countryData?.languages).map((key) => key + ", ") } <br/>
+
+                    Area: { countryData?.area }
                </Text>
                
                 }
