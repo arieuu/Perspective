@@ -33,6 +33,7 @@ function CountryCard({name, onDelete, onEdit, setFocus, index}: Props) {
     const editInputReference = useRef<HTMLInputElement>(null);
     const [countryData, setCountryData] = useState<Country>();
     const [isLoading, setIsLoading]= useState(false);
+    const [wasFound, setWasFound] = useState(true);
 
     useEffect(() => {
         setIsLoading(true)
@@ -40,13 +41,23 @@ function CountryCard({name, onDelete, onEdit, setFocus, index}: Props) {
         .then((response) => {
             setCountryData(response.data[0]); // Return the first country found
             setIsLoading(false);
+            setWasFound(true);
         })
         
         .catch(err => {
-            if(err instanceof CanceledError) return; // Clean up in case of cancellation
+            if(err instanceof CanceledError) return;                // Clean up in case of cancellation
+
+            if(err.response.status == 404) {
+                // We update the state when the country is not found and stop trying to load
+                setWasFound(false);                                
+                setIsLoading(false);
+                const emptyCountry = {name: {common: "No found"} as Name} as Country
+                setCountryData(emptyCountry)
+            }
             return
         })
-    }, []);
+    
+    }, [name]); // In case the dependency of name changes the component will re-render (that helps when editing)
     
     return(
         <Card>
@@ -100,14 +111,19 @@ function CountryCard({name, onDelete, onEdit, setFocus, index}: Props) {
             <CardBody display="flex">
                 { isLoading && <Spinner justifySelf="center" alignSelf="center" marginX="auto"/>}
                 
-                { !isLoading && 
+                { wasFound && !isLoading && 
+
                 <Text>
                     Official: { countryData?.name.official} <br/> 
                     Capital: { countryData?.capital.map((c) => c + ", ")} <br/>
                     Population: {countryData?.population} <br/>
                     Continent: { countryData?.continents.map(c => c + " ") } <br/>
                </Text>
+               
                 }
+
+
+                { !isLoading && !wasFound && <Text> Country not found, update your query </Text>}
             </CardBody>
         </Card>
     )

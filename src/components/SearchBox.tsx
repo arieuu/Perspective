@@ -31,16 +31,16 @@ function SearchBox({ onSubmit, focus }: Props) {
                 event.preventDefault();                         // Preventing page from updating
 
                 if(inputReference.current) {
-                    onSubmit(inputReference.current.value);
+                    onSubmit(inputReference.current.value.trim());
                     inputReference.current.value = ""           // Clean up the input after commiting
                 }
             }}>
 
                 <InputGroup >
-                    <Input ref={inputReference} size="lg" minWidth={5} placeholder="Name a country" focusBorderColor="none"/>
+                    <Input ref={inputReference} size="lg" minWidth={5} placeholder="Name a country (ex: cabo verde)" focusBorderColor="none"/>
 
                     <InputRightElement  marginTop={1}>
-                        <button type="submit"><SearchIcon boxSize={5} my="auto" />  </button>
+                        <button type="submit"> <SearchIcon boxSize={5} my="auto" /> </button>
                     </InputRightElement>
                 </InputGroup>
 
