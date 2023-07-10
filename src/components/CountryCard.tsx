@@ -37,6 +37,10 @@ function CountryCard({name, onDelete, onEdit, setFocus, index}: Props) {
     const [countryData, setCountryData] = useState<Country>();
     const [isLoading, setIsLoading]= useState(false);
     const [wasFound, setWasFound] = useState(true);
+    
+    function breakrow() {
+        return(<br/>)
+    }
 
     useEffect(() => {
         setIsLoading(true)
@@ -118,7 +122,11 @@ function CountryCard({name, onDelete, onEdit, setFocus, index}: Props) {
 
                 <Text>
                     Official: { countryData?.name.official} <br/> 
-                    Capital: { countryData?.capital.map((c) => c + ", ")} <br/>
+
+                    {/* Only show a countries capital if that data is available. If not just ignore it altogether */}
+                    {countryData?.capital && "Capital: " +  countryData?.capital.map((c) => c + ", ") }
+                    {countryData?.capital && breakrow()}
+
                     {/* Population: { countryData?.population} <br/> */}
                     Population: { countryData?.population && abbreviateNumber(countryData.population)} <br/>
                     Continent: { countryData?.continents.map(c => c + " ") } <br/>
