@@ -38,8 +38,13 @@ function CountryCard({name, onDelete, onEdit, setFocus, index}: Props) {
     const [isLoading, setIsLoading]= useState(false);
     const [wasFound, setWasFound] = useState(true);
     
-    function breakrow() {
+    // Function to return linebreak for conditional rendering. In case the capital is shown
+    function showBreakrow() {
         return(<br/>)
+    }
+
+    function showCapital() {
+        return(<Text as="span" fontWeight="medium"> Capital: </Text>)
     }
 
     useEffect(() => {
@@ -121,22 +126,24 @@ function CountryCard({name, onDelete, onEdit, setFocus, index}: Props) {
                 { wasFound && !isLoading && 
 
                 <Text>
-                    Official: { countryData?.name.official} <br/> 
+                    <Text as="span" fontWeight="medium" >Official</Text>: { countryData?.name.official} <br/> 
 
                     {/* Only show a countries capital if that data is available. If not just ignore it altogether */}
-                    {countryData?.capital && "Capital: " +  countryData?.capital.map((c) => c + ", ") }
-                    {countryData?.capital && breakrow()}
+                    {countryData?.capital && showCapital()}
+                    {countryData?.capital &&  countryData?.capital.map((c) => c + ", ") }
+                    {countryData?.capital && showBreakrow()}
 
                     {/* Population: { countryData?.population} <br/> */}
-                    Population: { countryData?.population && abbreviateNumber(countryData.population)} <br/>
-                    Continent: { countryData?.continents.map(c => c + " ") } <br/>
+                    <Text as="span" fontWeight="medium">Population:</Text> { countryData?.population && abbreviateNumber(countryData.population)} <br/>
+                    <Text as="span" fontWeight="medium">Continent:</Text> { countryData?.continents.map(c => c + " ") } <br/>
                     
                     { /* Using the object.values method to get all the values in an array regardless of the keys,
                         and then iterating through that array to show the values. */ }
-                    Languages: {  countryData?.languages && Object.values(countryData?.languages).map((key) => key + ", ") } <br/>
+
+                    <Text as="span" fontWeight="medium">Languages:</Text> {  countryData?.languages && Object.values(countryData?.languages).map((key) => key + ", ") } <br/>
 
                     { /* Area: { countryData?.area } <br/> */ }
-                    Area Km²: {countryData?.area && abbreviateNumber(countryData.area)}
+                    <Text as="span" fontWeight="medium">Area Km²:</Text> {countryData?.area && abbreviateNumber(countryData.area)}
                </Text>
                
                 }
