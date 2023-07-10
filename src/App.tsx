@@ -1,4 +1,4 @@
-import { Flex, Heading, SimpleGrid, Text, useColorMode, useToast } from '@chakra-ui/react'
+import { Alert, Flex, Heading, SimpleGrid, Text, background, color, useColorMode, useToast } from '@chakra-ui/react'
 import './App.css'
 import SearchBox from './components/SearchBox'
 import { CopyIcon, ViewIcon } from '@chakra-ui/icons'
@@ -15,7 +15,7 @@ function App() {
 
   const {colorMode, setColorMode } = useColorMode();
   setColorMode("light")
-  
+
   const toast = useToast();
 
   // Callback functions to add cards and delete cards respectively. Both will change state
@@ -34,7 +34,7 @@ function App() {
       toast({
         title: "Type something first",
         status: "warning",
-        duration: 800
+        duration: 800,
       });
     }
   }
@@ -53,7 +53,8 @@ function App() {
     toast({
       title: name + " has been deleted",
       status: "success",
-      duration: 1000
+      duration: 1000,
+
     });
   }
 
@@ -91,7 +92,7 @@ function App() {
 
         {/* countryNames.length == 0 && <Text marginTop={32} opacity="50%"> No cards yet <CopyIcon /> </Text> */}
 
-      <SimpleGrid columns={3} minChildWidth="200px" gap={3} width="100%" mt={10}>
+      <SimpleGrid columns={3} minChildWidth="220px" gap={3} width="100%" mt={10}>
 
         {countryNames.map((name, index) => 
           <CountryCard name={name} onDelete={onDelete} onEdit={onEdit} setFocus={setFocus} key={index} index={index}/>  // Card component, we give it a name and a delete callback

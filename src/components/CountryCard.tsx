@@ -6,6 +6,7 @@ import { Box, Button, Card, CardBody,  CardHeader,  Flex,  Heading, IconButton, 
 import { useEffect, useRef, useState } from "react";
 import axiosInstance from "../services/axios-instance";
 import { CanceledError } from "axios";
+import abbreviateNumber from "../services/abreviateNumber";
 
 interface Props {
     name: string;
@@ -21,7 +22,7 @@ interface Country {
     continents: string[];
     population: string;
     languages: object;          // The keys will not be known before hand, so we just use a generic object
-    area: number;
+    area: string;
 }
 
 interface Name {
@@ -53,7 +54,7 @@ function CountryCard({name, onDelete, onEdit, setFocus, index}: Props) {
                 // We update the state when the country is not found and stop trying to load
                 setWasFound(false);                                
                 setIsLoading(false);
-                const emptyCountry = {name: {common: "No found"} as Name} as Country
+                const emptyCountry = {name: {common: "Not found"} as Name} as Country
                 setCountryData(emptyCountry)
             }
             return
@@ -62,7 +63,7 @@ function CountryCard({name, onDelete, onEdit, setFocus, index}: Props) {
     }, [name]); // In case the dependency of name changes the component will re-render (that helps when editing)
     
     return(
-        <Card>
+        <Card backgroundColor="lightblue">
             <CardHeader display="flex" justifyContent="space-between" alignItems="center" gap={2}>
                 <Box display="flex" gap={3} alignItems="center">
                     <Heading as="h3" fontSize={20}> { countryData?.name.common } </Heading>
@@ -118,15 +119,16 @@ function CountryCard({name, onDelete, onEdit, setFocus, index}: Props) {
                 <Text>
                     Official: { countryData?.name.official} <br/> 
                     Capital: { countryData?.capital.map((c) => c + ", ")} <br/>
-                    Population: {countryData?.population} <br/>
+                    {/* Population: { countryData?.population} <br/> */}
+                    Population: { countryData?.population && abbreviateNumber(countryData.population)} <br/>
                     Continent: { countryData?.continents.map(c => c + " ") } <br/>
                     
                     { /* Using the object.values method to get all the values in an array regardless of the keys,
                         and then iterating through that array to show the values. */ }
+                    Languages: {  countryData?.languages && Object.values(countryData?.languages).map((key) => key + ", ") } <br/>
 
-                    Languages: { countryData?.languages && Object.values(countryData?.languages).map((key) => key + ", ") } <br/>
-
-                    Area: { countryData?.area }
+                    { /* Area: { countryData?.area } <br/> */ }
+                    Area Km²: {countryData?.area && abbreviateNumber(countryData.area)}
                </Text>
                
                 }

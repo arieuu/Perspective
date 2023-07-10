@@ -37,7 +37,7 @@ function SearchBox({ onSubmit, focus }: Props) {
             }}>
 
                 <InputGroup >
-                    <Input ref={inputReference} size="lg" minWidth={5} placeholder="Name a country (ex: cabo verde)" focusBorderColor="none"/>
+                    <Input ref={inputReference} size="lg" minWidth={5} placeholder="Name a country (ex: cape verde)" focusBorderColor="none"/>
 
                     <InputRightElement  marginTop={1}>
                         <button type="submit"> <SearchIcon boxSize={5} my="auto" /> </button>
