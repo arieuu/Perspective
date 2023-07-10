@@ -4,6 +4,7 @@ import SearchBox from './components/SearchBox'
 import { CopyIcon, ViewIcon } from '@chakra-ui/icons'
 import CountryCard from './components/CountryCard'
 import { useState } from 'react'
+import ComparisonButtons from './components/ComparisonButtons'
 
 
 function App() {
@@ -78,7 +79,7 @@ function App() {
   }
 
   return (
-    <Flex justifyContent="center" minHeight="100vh" alignItems="center" flexDirection="column" minWidth="400px" px={8} maxWidth="60%" marginX="auto">
+    <Flex justifyContent="center"  minHeight="100vh" alignItems="center" flexDirection="column" minWidth="400px" px={8} maxWidth="60%" marginX="auto">
       
       <ViewIcon boxSize={'16'} />  
       <Heading as="h1" mb={10} fontSize="5xl"> Perspective </Heading> 
@@ -90,9 +91,11 @@ function App() {
 
       </Flex>
 
+      {countryNames.length >= 2 && <ComparisonButtons />}
+
         {/* countryNames.length == 0 && <Text marginTop={32} opacity="50%"> No cards yet <CopyIcon /> </Text> */}
 
-      <SimpleGrid columns={3} minChildWidth="220px" gap={3} width="100%" mt={10}>
+      <SimpleGrid columns={3} minChildWidth="220px" gap={3} width="100%" mt={5} >
 
         {countryNames.map((name, index) => 
           <CountryCard name={name} onDelete={onDelete} onEdit={onEdit} setFocus={setFocus} key={index} index={index}/>  // Card component, we give it a name and a delete callback
