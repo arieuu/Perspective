@@ -5,12 +5,14 @@ import { CopyIcon, ViewIcon } from '@chakra-ui/icons'
 import CountryCard from './components/CountryCard'
 import { useState } from 'react'
 import ComparisonButtons from './components/ComparisonButtons'
+import Country from './types/Country'
 
 
 function App() {
   const [countryNames, setCountryName] = useState<string[]>([]);
   const [focus, setFocus] = useState<boolean>(false);
   const [numberOfCards, setNumberOfCards] = useState(0);
+  const [countryData, setCountryData] = useState<Country[]>([]);
   
   /* Hacking color mode to make it light cause I don't know how else to change it */
 
@@ -27,7 +29,7 @@ function App() {
 
     if(name.length > 1) {
       const num = numberOfCards + 1;
-      setNumberOfCards(num);
+      setNumberOfCards(num); 
 
       setCountryName([...countryNames, name]);
 
@@ -48,6 +50,10 @@ function App() {
 
   const onDelete = (cardId: string, name: string) => {
     setCountryName([...countryNames].filter((value, index) => index.toString() != cardId)); // Filter the selected name out
+    setCountryData([...countryData].filter((value, index) => {
+      if(index.toString() == cardId) console.log(value.name.common)
+      return index.toString() != cardId;
+    })); // Filter the selected name out
     setFocus(true);
     // Show a toast success message uppon deletion
 
@@ -78,11 +84,20 @@ function App() {
     })
   }
 
+  // This will clean up the country objects array
+
+  if(countryData.length > countryNames.length) {
+    countryData.pop()
+    alert("popped it")
+  }
+
+  console.log(countryNames)
+  console.log(countryData)
+
   return (
     <Flex justifyContent="center"  minHeight="100vh" alignItems="center" flexDirection="column" minWidth="400px" px={8} maxWidth="60%" marginX="auto">
-      
       <ViewIcon boxSize={'16'} />  
-      <Heading as="h1" mb={10} fontSize="5xl"> Perspective </Heading> 
+      <Heading as="h1" mb={10} fontSize="5xl">  Perspective </Heading> 
 
       <Flex flexDirection="column" minWidth="60%"  px={10}>
 
@@ -91,14 +106,13 @@ function App() {
 
       </Flex>
 
-      {countryNames.length >= 2 && <ComparisonButtons />}
+      {countryNames.length >= 2 && <ComparisonButtons setCountryData={setCountryData} countryData={countryData} setCountryName={setCountryName} countryNames={countryNames}/>}
 
-        {/* countryNames.length == 0 && <Text marginTop={32} opacity="50%"> No cards yet <CopyIcon /> </Text> */}
+      {/* countryNames.length == 0 && <Text marginTop={32} opacity="50%"> No cards yet <CopyIcon /> </Text> */}
 
       <SimpleGrid columns={3} minChildWidth="220px" gap={3} width="100%" mt={5} >
-
         {countryNames.map((name, index) => 
-          <CountryCard name={name} onDelete={onDelete} onEdit={onEdit} setFocus={setFocus} key={index} index={index}/>  // Card component, we give it a name and a delete callback
+          <CountryCard name={name} onDelete={onDelete} onEdit={onEdit} setFocus={setFocus} key={index} index={index} setCountryData={setCountryData} countryData={countryData}/>  // Card component, we give it a name and a delete callback
         )} 
       </SimpleGrid>
    </Flex>
