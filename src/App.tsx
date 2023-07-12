@@ -31,7 +31,8 @@ function App() {
       const num = numberOfCards + 1;
       setNumberOfCards(num); 
 
-      setCountryName([...countryNames, name]);
+      // setCountryName([...countryNames, name]);
+      setCountryData([...countryData, new Country(name)])
 
     } else if(name.length < 1) {
       toast({
@@ -41,6 +42,8 @@ function App() {
       });
     }
   }
+
+  console.log(countryData)
 
   /*
      When the user clicks to delete card this function will update the array of available country names to
@@ -52,9 +55,9 @@ function App() {
 
     // Filter the selected names out of their respective lists then return the focus back to the input
 
-    setCountryName([...countryNames].filter((value, index) => index.toString() != cardId)); // Filter the selected name out
+    // setCountryName([...countryNames].filter((value, index) => index.toString() != cardId)); // Filter the selected name out
 
-    setCountryData([...countryData].filter((value, index) => {
+    setCountryData([...countryData].filter((country, index) => {
       return index.toString() != cardId;
     }));
 
@@ -71,16 +74,20 @@ function App() {
   }
 
   const onEdit = (cardId: string, newName: string) => {
-    const newArray = countryNames.map((currentName, index) => {
+    const newCountryArray = countryData.map((country, index) => {
       if(index.toString() == cardId) {
-        return newName
+        country.setInputName(newName);
+        country.setWasRendered(false);
+        return country
 
       } else {
-        return currentName
+        return country
       }
     });
 
-    setCountryName(newArray)
+    console.log("countries: " + newCountryArray)
+
+    setCountryData(newCountryArray)
 
     toast({
       title: "Edited successfully",
@@ -90,15 +97,19 @@ function App() {
   }
 
   /* This will clean up the country objects array but it's quite a hack and I'll need to 
-   address it later. */
+   address it later. 
 
   if(countryData.length > countryNames.length) {
     countryData.pop()
     // alert("popped it")
   }
 
+  */
+
   // console.log(countryNames)
   // console.log(countryData)
+
+  console.log("COUNTRIES: " + countryData)
 
   return (
     <Flex justifyContent="center"  minHeight="100vh" alignItems="center" flexDirection="column" minWidth="400px" px={8} maxWidth="60%" marginX="auto">
@@ -117,8 +128,8 @@ function App() {
       {/* countryNames.length == 0 && <Text marginTop={32} opacity="50%"> No cards yet <CopyIcon /> </Text> */}
 
       <SimpleGrid columns={3} minChildWidth="220px" gap={3} width="100%" mt={5} >
-        {countryNames.map((name, index) => 
-          <CountryCard name={name} onDelete={onDelete} onEdit={onEdit} setFocus={setFocus} key={index} index={index} setCountryData={setCountryData} countryData={countryData}/>  // Card component, we give it a name and a delete callback
+        {countryData.map((country, index) => 
+          <CountryCard name={country.name.inputName} countryObject={country} onDelete={onDelete} onEdit={onEdit} setFocus={setFocus} key={index} index={index} setCountryData={setCountryData} countryData={countryData}/>  // Card component, we give it a name and a delete callback
         )} 
       </SimpleGrid>
    </Flex>
