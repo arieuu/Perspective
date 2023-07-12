@@ -28,11 +28,13 @@ function SearchBox({ onSubmit, focus }: Props) {
     return(
         <Box border="2 white solid" width="100%">
             <form onSubmit={(event) => {
-                event.preventDefault();                         // Preventing page from updating
+
+                // We prevent the page from reloading and clean up the input field
+                event.preventDefault();           
 
                 if(inputReference.current) {
                     onSubmit(inputReference.current.value.trim());
-                    inputReference.current.value = ""           // Clean up the input after commiting
+                    inputReference.current.value = "";
                 }
             }}>
 

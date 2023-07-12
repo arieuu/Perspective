@@ -1,30 +1,7 @@
-/*
-export default interface Country {
-    name: countryName;
-    capital: string[];
-    continents: string[];
-    population: string;
-    languages: object;          // The keys will not be known beforehand, so we just use a generic object
-    area: string;
-}
-*/
-
-class CountryName {
-    common: string;
-    official: string;
-    inputName: string;
-
-    constructor(inputName: string) {
-        this.inputName = inputName;
-    }
-
-    setInputName(name: string) {
-        this.inputName = name;
-    }
-}
+import CountryName from "./CountryName";
 
 class Country {
-    name: countryName;
+    name: CountryName;
     capital: string[];
     continents: string[];
     population: string;
@@ -32,6 +9,7 @@ class Country {
     area: string;
     wasFound = false;
     wasRendered = false;
+    birote: string;
 
     constructor(simpleName: string) {
         this.name = new CountryName(simpleName)

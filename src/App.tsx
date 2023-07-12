@@ -5,14 +5,13 @@ import { CopyIcon, ViewIcon } from '@chakra-ui/icons'
 import CountryCard from './components/CountryCard'
 import { useState } from 'react'
 import ComparisonButtons from './components/ComparisonButtons'
-import Country from './types/Country'
+import Country from './model/Country'
 
 
 function App() {
-  const [countryNames, setCountryName] = useState<string[]>([]);
   const [focus, setFocus] = useState<boolean>(false);
   const [numberOfCards, setNumberOfCards] = useState(0);
-  const [countryData, setCountryData] = useState<Country[]>([]);
+  const [countryList, setCountryList] = useState<Country[]>([]);
   
   /* Hacking color mode to make it light cause I don't know how else to change it */
 
@@ -31,8 +30,7 @@ function App() {
       const num = numberOfCards + 1;
       setNumberOfCards(num); 
 
-      // setCountryName([...countryNames, name]);
-      setCountryData([...countryData, new Country(name)])
+      setCountryList([...countryList, new Country(name)])
 
     } else if(name.length < 1) {
       toast({
@@ -43,39 +41,34 @@ function App() {
     }
   }
 
-  console.log(countryData)
-
   /*
-     When the user clicks to delete card this function will update the array of available country names to
-     remove the deleted country. That will make the card go away by updating state, then we update state again
-     and return focus to input so that the user can go right back to typing.
+     When the user clicks delete card this function will update the array of available countries to
+     remove the specific country. Then we update state to save the now changed array of countries.
+     After that's done we get the focus back to the main input and show a success message.
   */
 
   const onDelete = (cardId: string, name: string) => {
 
-    // Filter the selected names out of their respective lists then return the focus back to the input
-
-    // setCountryName([...countryNames].filter((value, index) => index.toString() != cardId)); // Filter the selected name out
-
-    setCountryData([...countryData].filter((country, index) => {
+    setCountryList([...countryList].filter((country, index) => {
       return index.toString() != cardId;
     }));
 
     setFocus(true);
 
-    // Show a toast success message uppon deletion
-
     toast({
-      title: name + " has been deleted",
+      title: name + " successfully deleted",
       status: "success",
       duration: 1000,
 
     });
   }
 
-  const onEdit = (cardId: string, newName: string) => {
-    const newCountryArray = countryData.map((country, index) => {
-      if(index.toString() == cardId) {
+  const onEdit = (cardIndex: string, newName: string) => {
+    const editedCountryList = countryList.map((country, index) => {
+
+      if(index.toString() == cardIndex) {
+
+        // We change the input name and rendered atribute to false so a new request is made and the info is updated
         country.setInputName(newName);
         country.setWasRendered(false);
         return country
@@ -83,11 +76,10 @@ function App() {
       } else {
         return country
       }
+
     });
 
-    console.log("countries: " + newCountryArray)
-
-    setCountryData(newCountryArray)
+    setCountryList(editedCountryList);
 
     toast({
       title: "Edited successfully",
@@ -96,23 +88,10 @@ function App() {
     })
   }
 
-  /* This will clean up the country objects array but it's quite a hack and I'll need to 
-   address it later. 
-
-  if(countryData.length > countryNames.length) {
-    countryData.pop()
-    // alert("popped it")
-  }
-
-  */
-
-  // console.log(countryNames)
-  // console.log(countryData)
-
-  console.log("COUNTRIES: " + countryData)
-
   return (
+    
     <Flex justifyContent="center"  minHeight="100vh" alignItems="center" flexDirection="column" minWidth="400px" px={8} maxWidth="60%" marginX="auto">
+
       <ViewIcon boxSize={'16'} />  
       <Heading as="h1" mb={10} fontSize="5xl">  Perspective </Heading> 
 
@@ -123,14 +102,17 @@ function App() {
 
       </Flex>
 
-      {countryNames.length >= 2 && <ComparisonButtons setCountryData={setCountryData} countryData={countryData} setCountryName={setCountryName} countryNames={countryNames}/>}
+      {countryList.length >= 2 && <ComparisonButtons setCountryList={setCountryList} countryList={countryList} /> }
 
       {/* countryNames.length == 0 && <Text marginTop={32} opacity="50%"> No cards yet <CopyIcon /> </Text> */}
 
-      <SimpleGrid columns={3} minChildWidth="220px" gap={3} width="100%" mt={5} >
-        {countryData.map((country, index) => 
-          <CountryCard name={country.name.inputName} countryObject={country} onDelete={onDelete} onEdit={onEdit} setFocus={setFocus} key={index} index={index} setCountryData={setCountryData} countryData={countryData}/>  // Card component, we give it a name and a delete callback
+      <SimpleGrid columns={3} minChildWidth="220px" gap={3} width="100%" mt={5}>
+
+        {countryList.map((country, index) => 
+
+          <CountryCard countryEntity={country} onDelete={onDelete} onEdit={onEdit} setFocus={setFocus} key={index} index={index} countryList={countryList}/>
         )} 
+
       </SimpleGrid>
    </Flex>
   )
