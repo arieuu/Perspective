@@ -49,7 +49,6 @@ function CountryCard({ name, onDelete, onEdit, setFocus, index, setCountryData, 
 
             if(err.response.status == 404) {
                 // We update the state when the country is not found and stop trying to load
-                console.log("set to false")
                 setWasFound(false);                                
                 setIsLoading(false);
                 const emptyCountry = {name: {common: "Not found"} as countryName} as Country
@@ -60,7 +59,6 @@ function CountryCard({ name, onDelete, onEdit, setFocus, index, setCountryData, 
     
     }, [name]); // In case the dependency of name changes the component will re-render (that helps when editing)
     
-    console.log(wasFound)
     return(
         <Card backgroundColor="lightblue">
             <CardHeader display="flex" justifyContent="space-between" alignItems="center" gap={2}>

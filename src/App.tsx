@@ -49,12 +49,17 @@ function App() {
   */
 
   const onDelete = (cardId: string, name: string) => {
+
+    // Filter the selected names out of their respective lists then return the focus back to the input
+
     setCountryName([...countryNames].filter((value, index) => index.toString() != cardId)); // Filter the selected name out
+
     setCountryData([...countryData].filter((value, index) => {
-      if(index.toString() == cardId) console.log(value.name.common)
       return index.toString() != cardId;
-    })); // Filter the selected name out
+    }));
+
     setFocus(true);
+
     // Show a toast success message uppon deletion
 
     toast({
@@ -84,15 +89,16 @@ function App() {
     })
   }
 
-  // This will clean up the country objects array
+  /* This will clean up the country objects array but it's quite a hack and I'll need to 
+   address it later. */
 
   if(countryData.length > countryNames.length) {
     countryData.pop()
-    alert("popped it")
+    // alert("popped it")
   }
 
-  console.log(countryNames)
-  console.log(countryData)
+  // console.log(countryNames)
+  // console.log(countryData)
 
   return (
     <Flex justifyContent="center"  minHeight="100vh" alignItems="center" flexDirection="column" minWidth="400px" px={8} maxWidth="60%" marginX="auto">
