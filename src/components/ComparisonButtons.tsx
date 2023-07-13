@@ -34,6 +34,7 @@ function ComparisonButtons({ countryList, setCountryList, setComparisonTitle}:Pr
 
             <Tooltip hasArrow bg={"gray.900"} label="Area" aria-label='A tooltip'>
                 <span> <IconButton onClick={() => {
+                    setCountryList(compareCountries(countryList, "area").altered),
                     setComparisonTitle("Area")
                 }} 
                 as={TbRulerMeasure} boxSize={8} padding={"1.5"} mb={0}  aria-label="close" size="sm" justifySelf="flex-end" alignSelf="flex-end"/> </span>
