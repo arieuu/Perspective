@@ -1,4 +1,4 @@
-import { Alert, Flex, Heading, SimpleGrid, Text, background, color, useColorMode, useToast } from '@chakra-ui/react'
+import { Alert, Box, Flex, Heading, SimpleGrid, Text, background, color, useColorMode, useToast } from '@chakra-ui/react'
 import './App.css'
 import SearchBox from './components/SearchBox'
 import { CopyIcon, ViewIcon } from '@chakra-ui/icons'
@@ -12,6 +12,8 @@ function App() {
   const [focus, setFocus] = useState<boolean>(false);
   const [numberOfCards, setNumberOfCards] = useState(0);
   const [countryList, setCountryList] = useState<Country[]>([]);
+  const [comparisonTitle, setComparisonTitle] = useState("Default");
+
   
   /* Hacking color mode to make it light cause I don't know how else to change it */
 
@@ -54,6 +56,8 @@ function App() {
     }));
 
     setFocus(true);
+  
+    if(countryList.length < 3) setComparisonTitle("Default")
 
     toast({
       title: name + " successfully deleted",
@@ -102,11 +106,23 @@ function App() {
 
       </Flex>
 
-      {countryList.length >= 2 && <ComparisonButtons setCountryList={setCountryList} countryList={countryList} /> }
+      { countryList.length > 1 &&
+        <Flex flexDirection="row" width="100%" justifyContent="space-between" marginTop={0}>
+
+          <Box marginY="auto">
+            <Heading mt={5}> {comparisonTitle} </Heading>
+          </Box>
+
+          <Box marginY="auto">
+            <ComparisonButtons setCountryList={setCountryList} countryList={countryList} setComparisonTitle={setComparisonTitle}/>
+          </Box>
+
+        </Flex>
+      }
 
       {/* countryNames.length == 0 && <Text marginTop={32} opacity="50%"> No cards yet <CopyIcon /> </Text> */}
 
-      <SimpleGrid columns={3} minChildWidth="220px" gap={3} width="100%" mt={5}>
+      <SimpleGrid columns={3} minChildWidth="220px" gap={3} width="100%" mt={8}>
 
         {countryList.map((country, index) => 
 
