@@ -4,6 +4,7 @@ import { TbRulerMeasure } from "react-icons/tb";
 import { FaLanguage } from "react-icons/fa";
 import { BiSolidMap} from "react-icons/bi";
 import Country from "../model/Country";
+import compareCountries from "../services/compare";
 
 interface Props {
     setCountryList: (newArray: Country[]) => void;
@@ -23,7 +24,7 @@ function ComparisonButtons({ countryList, setCountryList, setComparisonTitle}:Pr
 
             <Tooltip hasArrow bg={"gray.900"} label="Population" aria-label='A tooltip'>
                 <span> <IconButton onClick={() => {
-                    setCountryList([...countryList].reverse()),
+                    setCountryList(compareCountries(countryList, "population").altered),
                     setComparisonTitle("Population")
                 }} 
                 

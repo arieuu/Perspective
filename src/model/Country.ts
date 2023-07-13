@@ -9,7 +9,6 @@ class Country {
     area: string;
     wasFound = false;
     wasRendered = false;
-    birote: string;
 
     constructor(simpleName: string) {
         this.name = new CountryName(simpleName)
