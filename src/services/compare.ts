@@ -1,7 +1,23 @@
 import Country from "../model/Country";
 
 function population(countries: Country[]) {
-    const altered = countries.slice().reverse(); // Copy an array and mutate it
+    const altered: Country[] = []; // Copy an array and mutate it
+    const values = countries.map((country) => parseInt(country.population))
+
+    console.log(values);
+
+    const sortedValues = values.slice().sort((a, b) => b - a);
+
+    console.log(sortedValues)
+
+    sortedValues.map((value) => {
+        countries.map((country) => {
+            if(country.population == value.toString()) {
+                altered.push(country);
+            }
+        })
+    });
+
     return altered;
 }
 
