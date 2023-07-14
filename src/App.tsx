@@ -107,7 +107,7 @@ function App() {
       </Flex>
 
       { countryList.length > 1 &&
-        <Flex flexDirection="row" width="100%" justifyContent="space-between" marginTop={0}>
+        <Flex flexDirection="row" width="100%" justifyContent="space-between"  marginTop={{base: "10", xl: "0"}}>
 
           <Box marginY="auto">
             <Heading mt={5}> {comparisonTitle} </Heading>
