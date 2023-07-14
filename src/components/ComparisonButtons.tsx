@@ -23,12 +23,12 @@ function ComparisonButtons({ countryList, setCountryList, setComparisonTitle}:Pr
             
 
             <Tooltip hasArrow bg={"gray.900"} label="Population" aria-label='A tooltip'>
-                <span> <IconButton onClick={() => {
+                <span> <IconButton  onClick={() => {
                     setCountryList(compareCountries(countryList, "population").altered),
                     setComparisonTitle("Population")
                 }} 
                 
-                as={BsPeopleFill} boxSize={8} padding={"1.5"} mb={0}  aria-label="close" size="sm" justifySelf="flex-end" alignSelf="flex-end"/> </span>
+                as={BsPeopleFill} boxSize={8} padding={"1.5"} mb={0}  aria-label="close" size="sm" justifySelf="flex-end" alignSelf="flex-end" cursor="pointer"/> </span>
             </Tooltip>
 
 
@@ -37,23 +37,25 @@ function ComparisonButtons({ countryList, setCountryList, setComparisonTitle}:Pr
                     setCountryList(compareCountries(countryList, "area").altered),
                     setComparisonTitle("Area")
                 }} 
-                as={TbRulerMeasure} boxSize={8} padding={"1.5"} mb={0}  aria-label="close" size="sm" justifySelf="flex-end" alignSelf="flex-end"/> </span>
+                as={TbRulerMeasure} boxSize={8} padding={"1.5"} mb={0}  aria-label="close" size="sm" justifySelf="flex-end" alignSelf="flex-end" cursor="pointer" /> </span>
             </Tooltip>
 
 
             <Tooltip hasArrow bg={"gray.900"} label="Languages spoken" aria-label='A tooltip'>
                 <span> <IconButton onClick={() => {
+                    setCountryList(compareCountries(countryList, "languages").altered);
                     setComparisonTitle("Languages")
                 }}
-                as={FaLanguage} boxSize={8} padding={"1.5"} mb={0}  aria-label="close" size="sm" justifySelf="flex-end" alignSelf="flex-end"/> </span>
+                as={FaLanguage} boxSize={8} padding={"1.5"} mb={0}  aria-label="close" size="sm" justifySelf="flex-end" alignSelf="flex-end" cursor="pointer" /> </span>
             </Tooltip>
 
 
             <Tooltip hasArrow bg={"gray.900"} label="Number of capitals" aria-label='A tooltip'>
                 <span> <IconButton onClick={() => {
+                    setCountryList(compareCountries(countryList, "capitals").altered);
                     setComparisonTitle("Capitals")
                 }} 
-                as={BiSolidMap} boxSize={8} padding={"1.5"} mb={0}  aria-label="close" size="sm" justifySelf="flex-end" alignSelf="flex-end"/> </span>
+                as={BiSolidMap} boxSize={8} padding={"1.5"} mb={0}  aria-label="close" size="sm" justifySelf="flex-end" alignSelf="flex-end" cursor="pointer" /> </span>
             </Tooltip>
         </Flex>
         </>

@@ -45,6 +45,60 @@ function area(countries: Country[]) {
     return altered;
 }
 
+
+function languages(countries: Country[]) {
+    const altered: Country[] = [];
+    
+    // Here we get the length of the object as the value
+    const values = countries.map((country) => Object.keys(country.languages).length)
+
+    console.log(values);
+
+    // Sort list from biggest to smallest
+    const sortedValues = values.slice().sort((a, b) => b - a);
+
+    console.log(sortedValues)
+
+    sortedValues.map((value) => {
+        countries.map((country) => {
+            if(Object.keys(country.languages).length == value) {
+                if(!altered.includes(country)) {  // Avoiding repeated values
+                    altered.push(country);
+                }
+            }
+        });
+    });
+
+    return altered;
+}
+
+
+function capitals(countries: Country[]) {
+    const altered: Country[] = [];
+    
+    // Here we get the length of the object as the value
+    const values = countries.map((country) => country.capital.length)
+
+    console.log(values);
+
+    // Sort list from biggest to smallest
+    const sortedValues = values.slice().sort((a, b) => b - a);
+
+    console.log(sortedValues)
+
+    sortedValues.map((value) => {
+        countries.map((country) => {
+            if(country.capital.length == value) {
+                if(!altered.includes(country)) {  // Avoiding repeated values
+                    altered.push(country);
+                }
+            }
+        });
+    });
+
+    return altered;
+}
+
 function compareCountries(countries: Country[], parameter: string) {
     let altered: Country[] = []; // An array of country entities
 
@@ -52,8 +106,18 @@ function compareCountries(countries: Country[], parameter: string) {
         case "population":
             altered = population(countries);
             break; 
+
         case "area":
             altered = area(countries);
+            break;
+            
+        case "languages":
+            altered = languages(countries);
+            break;
+
+        case "capitals":
+            altered = capitals(countries);
+            break;
     }
 
     return {
