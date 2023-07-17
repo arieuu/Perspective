@@ -9,6 +9,7 @@ class Country {
     area: string;
     wasFound = false;
     wasRendered = false;
+    wasEdited = false;
 
     constructor(simpleName: string) {
         this.name = new CountryName(simpleName)
@@ -52,6 +53,10 @@ class Country {
 
     setCapital(value: string[]) {
         this.capital = value;
+    }
+
+    setWasEdited(value: boolean) {
+        this.wasEdited = value;
     }
 
 }

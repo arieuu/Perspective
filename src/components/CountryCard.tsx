@@ -79,7 +79,12 @@ function CountryCard({ onDelete, onEdit, setFocus, index, countryList, countryEn
 
                     setWasFound(false);                                
                     setIsLoading(false);
-                    setValidCards(validCards -= 1);
+                    
+                    // Only decrement from valid cards if it was edited to something that couldn't be found
+                    
+                    if(countryEntity.wasEdited) {
+                        setValidCards(validCards -= 1);
+                    }
 
                     countryEntity.setCommonName("Not found")
                     countryEntity.setFound(false)

@@ -95,6 +95,7 @@ function App() {
         // We change the input name and rendered atribute to false so a new request is made and the info is updated
         country.setInputName(newName);
         country.setWasRendered(false);
+        country.setWasEdited(true);
         return country
 
       } else {
@@ -110,19 +111,6 @@ function App() {
       status: "success",
       duration: 1000
     })
-  }
-
-  function checkCountries() {
-
-    const newList = countryList.filter((c) => c.wasFound)
-
-    console.log(newList)
-
-    if(newList.length > 1) {
-      return true;
-    }
-
-    return false;
   }
 
   return (
