@@ -13,6 +13,7 @@ function App() {
   const [numberOfCards, setNumberOfCards] = useState(0);
   const [countryList, setCountryList] = useState<Country[]>([]);
   const [comparisonTitle, setComparisonTitle] = useState("Default");
+  const [validCards, setValidCards] = useState(0);
 
   
   /* Hacking color mode to make it light cause I don't know how else to change it */
@@ -52,7 +53,13 @@ function App() {
   const onDelete = (cardId: string, name: string) => {
 
     setCountryList([...countryList].filter((country, index) => {
+
+      // update list we use to determine if 2 or more valid countries are available for comparison
+
+      const newValue = validCards - 1
+      if(country.wasFound) setValidCards(newValue)
       return index.toString() != cardId;
+
     }));
 
     setFocus(true);
@@ -80,6 +87,7 @@ function App() {
 
       return
     }
+
     const editedCountryList = countryList.map((country, index) => {
 
       if(index.toString() == cardIndex) {
@@ -104,6 +112,19 @@ function App() {
     })
   }
 
+  function checkCountries() {
+
+    const newList = countryList.filter((c) => c.wasFound)
+
+    console.log(newList)
+
+    if(newList.length > 1) {
+      return true;
+    }
+
+    return false;
+  }
+
   return (
     
     <Flex justifyContent="center"  minHeight="100vh" alignItems="center" flexDirection="column" minWidth="400px" px={8} maxWidth="60%" marginX="auto">
@@ -118,7 +139,7 @@ function App() {
 
       </Flex>
 
-      { countryList.length > 1 &&
+      { validCards > 1 &&
         <Flex flexDirection="row" width="100%" justifyContent="space-between"  marginTop={{base: "10", xl: "0"}}>
 
           <Box marginY="auto">
@@ -138,7 +159,7 @@ function App() {
 
         {countryList.map((country, index) => 
 
-          <CountryCard countryEntity={country} onDelete={onDelete} onEdit={onEdit} setFocus={setFocus} key={index} index={index} countryList={countryList}/>
+          <CountryCard countryEntity={country} onDelete={onDelete} onEdit={onEdit} setFocus={setFocus} key={index} index={index} countryList={countryList} setValidCards={setValidCards} validCards={validCards}/>
         )} 
 
       </SimpleGrid>

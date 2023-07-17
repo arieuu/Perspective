@@ -16,9 +16,11 @@ interface Props {
     index: number;
     countryList: Country[];
     countryEntity: Country;
+    setValidCards: (value: number) => void;
+    validCards: number;
 }
 
-function CountryCard({ onDelete, onEdit, setFocus, index, countryList, countryEntity}: Props) {
+function CountryCard({ onDelete, onEdit, setFocus, index, countryList, countryEntity, setValidCards, validCards}: Props) {
 
     const editInputReference = useRef<HTMLInputElement>(null);
     const [isLoading, setIsLoading]= useState(false);
@@ -60,6 +62,10 @@ function CountryCard({ onDelete, onEdit, setFocus, index, countryList, countryEn
 
                 setIsLoading(false);
                 setWasFound(true);
+                
+                // Increment number of valid cards available for comparison
+
+                setValidCards(validCards += 1);
             })
             
             .catch(err => {
@@ -73,6 +79,7 @@ function CountryCard({ onDelete, onEdit, setFocus, index, countryList, countryEn
 
                     setWasFound(false);                                
                     setIsLoading(false);
+                    setValidCards(validCards -= 1);
 
                     countryEntity.setCommonName("Not found")
                     countryEntity.setFound(false)
