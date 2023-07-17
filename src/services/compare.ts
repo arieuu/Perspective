@@ -4,16 +4,13 @@ function population(countries: Country[]) {
     const altered: Country[] = [];
     const values = countries.map((country) => parseInt(country.population))
 
-    console.log(values);
-
     // Sort list from biggest to smallest
-    const sortedValues = values.slice().sort((a, b) => b - a);
 
-    console.log(sortedValues)
+    const sortedValues = values.slice().sort((a, b) => b - a);
 
     sortedValues.map((value) => {
         countries.map((country) => {
-            if(parseInt(country.population) == value) {
+            if(parseInt(country.population) == value && country.wasFound) {
                 altered.push(country);
             }
         });
@@ -27,16 +24,13 @@ function area(countries: Country[]) {
     const altered: Country[] = [];
     const values = countries.map((country) => parseInt(country.area))
 
-    console.log(values);
-
     // Sort list from biggest to smallest
-    const sortedValues = values.slice().sort((a, b) => b - a);
 
-    console.log(sortedValues)
+    const sortedValues = values.slice().sort((a, b) => b - a);
 
     sortedValues.map((value) => {
         countries.map((country) => {
-            if(parseInt(country.area) == value) {
+            if(parseInt(country.area) == value && country.wasFound) {
                 altered.push(country);
             }
         });
@@ -50,20 +44,28 @@ function languages(countries: Country[]) {
     const altered: Country[] = [];
     
     // Here we get the length of the object as the value
-    const values = countries.map((country) => Object.keys(country.languages).length)
+    
+    // To prevent bugs we make sure the empty objects don't make it to the comparison statements
 
-    console.log(values);
+    const values = countries.map((country) => country.wasFound ? Object.keys(country.languages).length : 0)
 
     // Sort list from biggest to smallest
+
     const sortedValues = values.slice().sort((a, b) => b - a);
 
-    console.log(sortedValues)
-
     sortedValues.map((value) => {
+        
         countries.map((country) => {
+
+            if(!country.wasFound) return
+
             if(Object.keys(country.languages).length == value) {
+
                 if(!altered.includes(country)) {  // Avoiding repeated values
-                    altered.push(country);
+
+                    if(country.wasFound) {
+                        altered.push(country);
+                    }
                 }
             }
         });
@@ -77,18 +79,20 @@ function capitals(countries: Country[]) {
     const altered: Country[] = [];
     
     // Here we get the length of the object as the value
-    const values = countries.map((country) => country.capital.length)
 
-    console.log(values);
+    const values = countries.map((country) => country.wasFound ? country.capital.length : 0)
 
     // Sort list from biggest to smallest
+
     const sortedValues = values.slice().sort((a, b) => b - a);
 
-    console.log(sortedValues)
-
     sortedValues.map((value) => {
+
         countries.map((country) => {
-            if(country.capital.length == value) {
+
+            if(!country.wasFound) return
+
+            if(country.capital.length == value && country.wasFound) {
                 if(!altered.includes(country)) {  // Avoiding repeated values
                     altered.push(country);
                 }
