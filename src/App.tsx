@@ -68,6 +68,18 @@ function App() {
   }
 
   const onEdit = (cardIndex: string, newName: string) => {
+
+    // Make sure the user types something before editing
+
+    if(newName.length < 2) {
+      toast({
+      title: "Type something first!",
+      status: "warning",
+      duration: 1000,
+      });
+
+      return
+    }
     const editedCountryList = countryList.map((country, index) => {
 
       if(index.toString() == cardIndex) {

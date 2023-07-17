@@ -117,6 +117,7 @@ function CountryCard({ onDelete, onEdit, setFocus, index, countryList, countryEn
 
                                             if(editInputReference.current) {
                                                 onEdit(index.toString(), editInputReference.current.value);
+                                                editInputReference.current.value = "";
                                             }
                                             
                                             setFocus(true);
