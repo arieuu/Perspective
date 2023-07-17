@@ -1,4 +1,6 @@
 import Country from "../model/Country";
+import containsObject from "./containsObject";
+
 
 function population(countries: Country[]) {
     const altered: Country[] = [];
@@ -9,12 +11,19 @@ function population(countries: Country[]) {
     const sortedValues = values.slice().sort((a, b) => b - a);
 
     sortedValues.map((value) => {
+        
         countries.map((country) => {
+            
             if(parseInt(country.population) == value && country.wasFound) {
-                altered.push(country);
+
+                if(!containsObject(country, altered)) {     // Checking for duplicates before adding
+                    altered.push(country);
+                }
             }
         });
     });
+
+    console.log(altered)
 
     return altered;
 }
@@ -30,8 +39,12 @@ function area(countries: Country[]) {
 
     sortedValues.map((value) => {
         countries.map((country) => {
+
             if(parseInt(country.area) == value && country.wasFound) {
-                altered.push(country);
+
+                if(!containsObject(country, altered)) {      // Checking for duplicates first
+                    altered.push(country);
+                }
             }
         });
     });
