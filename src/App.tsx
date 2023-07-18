@@ -1,7 +1,7 @@
-import { Alert, Box, Flex, Heading, SimpleGrid, Text, background, color, useColorMode, useToast } from '@chakra-ui/react'
+import { Box, Flex, Heading, SimpleGrid, Text, useColorMode, useToast } from '@chakra-ui/react'
 import './App.css'
 import SearchBox from './components/SearchBox'
-import { CopyIcon, ViewIcon } from '@chakra-ui/icons'
+import { ViewIcon } from '@chakra-ui/icons'
 import CountryCard from './components/CountryCard'
 import { useState } from 'react'
 import ComparisonButtons from './components/ComparisonButtons'
@@ -18,7 +18,8 @@ function App() {
   
   /* Hacking color mode to make it light cause I don't know how else to change it */
 
-  const {colorMode, setColorMode } = useColorMode();
+  const {setColorMode } = useColorMode();
+
   setColorMode("light")
 
   const toast = useToast();
