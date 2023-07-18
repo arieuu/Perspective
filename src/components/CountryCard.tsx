@@ -36,6 +36,7 @@ function CountryCard({ onDelete, onEdit, setFocus, index, countryList, countryEn
         return(<Text as="span" fontWeight="medium"> Capital: </Text>)
     }
 
+
     useEffect(() => {
         
         // Don't make any requests to the API if the component has already been rendered.
@@ -66,7 +67,8 @@ function CountryCard({ onDelete, onEdit, setFocus, index, countryList, countryEn
                 
                 // Increment number of valid cards available for comparison
 
-                setValidCards(validCards += 1);
+                // eslint-disable-next-line react-hooks/exhaustive-deps
+                setValidCards(validCards += 1);  // Disabled check for this line
             })
             
             .catch(err => {
