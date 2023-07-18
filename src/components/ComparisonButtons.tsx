@@ -1,4 +1,4 @@
-import { Flex, IconButton, Text, Tooltip, useToast } from "@chakra-ui/react";
+import { Flex, IconButton, Text, Tooltip} from "@chakra-ui/react";
 import { BsPeopleFill } from "react-icons/bs";
 import { TbRulerMeasure } from "react-icons/tb";
 import { FaLanguage } from "react-icons/fa";
@@ -14,7 +14,7 @@ interface Props {
 
 function ComparisonButtons({ countryList, setCountryList, setComparisonTitle}:Props) {
     
-    const toast = useToast();
+    // const toast = useToast();
 
     function callCompare(parameter: string) {
         setCountryList(compareCountries(countryList, parameter).altered);
