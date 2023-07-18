@@ -94,6 +94,7 @@ function App() {
       if(index.toString() == cardIndex) {
 
         // We change the input name and rendered atribute to false so a new request is made and the info is updated
+        
         country.setInputName(newName);
         country.setWasRendered(false);
         country.setWasEdited(true);

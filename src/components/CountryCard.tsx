@@ -24,7 +24,6 @@ function CountryCard({ onDelete, onEdit, setFocus, index, countryList, countryEn
 
     const editInputReference = useRef<HTMLInputElement>(null);
     const [isLoading, setIsLoading]= useState(false);
-    // const [wasFound, setWasFound] = useState(true);
     
     // Function to return linebreak for conditional rendering. In case the capital is shown
 
@@ -62,10 +61,9 @@ function CountryCard({ onDelete, onEdit, setFocus, index, countryList, countryEn
                 countryEntity.setCapital(response.data[0].capital);
 
                 setIsLoading(false);
-                // setWasFound(true);
-                // countryEntity.setFound(true);
+                countryEntity.setFound(true);
                 
-                // Increment number of valid cards available for comparison
+                // Increment number of valid cards that are available for comparison
 
                 // eslint-disable-next-line react-hooks/exhaustive-deps
                 setValidCards(validCards += 1);  // Disabled check for this line
@@ -74,17 +72,17 @@ function CountryCard({ onDelete, onEdit, setFocus, index, countryList, countryEn
             .catch(err => {
 
                 // Clean up in case of cancellation
+
                 if(err instanceof CanceledError) return;
 
                 if(err.response.status == 404) {
 
                     // We update the state when the country is not found and stop trying to load
 
-                    // setWasFound(false);                                
-                    countryEntity.setFound(false);
                     setIsLoading(false);
                     
                     // Only decrement from valid cards if it was edited to something that couldn't be found
+
                     if(countryEntity.wasEdited) {
                         setValidCards(validCards -= 1);
                     }
