@@ -117,7 +117,7 @@ function App() {
 
   return (
     
-    <Flex justifyContent="center" border="1px solid black"  minHeight="95vh" alignItems="center" flexDirection="column" minWidth="95vw" marginX="auto">
+    <Flex justifyContent="center"   minHeight="95vh" alignItems="center" flexDirection="column" minWidth="95vw" marginX="auto">
 
       <ViewIcon boxSize={'16'} />  
       <Heading as="h1" mb={10} fontSize="5xl">  Perspective </Heading> 
@@ -125,7 +125,6 @@ function App() {
       <Flex flexDirection="column" minWidth="60%"  px={10}>
 
         <SearchBox onSubmit={onSubmit} focus={focus}/> 
-        <Text mt={1} alignSelf="flex-end" opacity="50%"> Powered by Rest Countries API</Text>
 
       </Flex>
 
