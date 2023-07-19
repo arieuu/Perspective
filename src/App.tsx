@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, SimpleGrid, Text, useColorMode, useToast } from '@chakra-ui/react'
+import { Box, Flex, Heading, SimpleGrid, useColorMode, useToast } from '@chakra-ui/react'
 import './App.css'
 import SearchBox from './components/SearchBox'
 import { ViewIcon } from '@chakra-ui/icons'
