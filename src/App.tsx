@@ -94,7 +94,7 @@ function App() {
       if(index.toString() == cardIndex) {
 
         // We change the input name and rendered atribute to false so a new request is made and the info is updated
-
+        
         country.setInputName(newName);
         country.setWasRendered(false);
         country.setWasEdited(true);
@@ -117,7 +117,7 @@ function App() {
 
   return (
     
-    <Flex justifyContent="center" border="1px black solid"  minHeight="50vh" alignItems="center" flexDirection="column" minWidth="40px" px={8} maxWidth="40%" marginX="auto">
+    <Flex justifyContent="center" border="1px solid black"  minHeight="90vh" alignItems="center" flexDirection="column" minWidth="390px" px={8} maxWidth="50%" marginX="auto">
 
       <ViewIcon boxSize={'16'} />  
       <Heading as="h1" mb={10} fontSize="5xl">  Perspective </Heading> 
