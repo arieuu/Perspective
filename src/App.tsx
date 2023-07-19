@@ -117,7 +117,7 @@ function App() {
 
   return (
     
-    <Flex justifyContent="center"   minHeight="95vh" alignItems="center" flexDirection="column" minWidth="95vw" marginX="auto">
+    <Flex justifyContent="center"   minHeight="95vh" alignItems="center" flexDirection="column" maxWidth={{base: "85vw", md: "60vw"}} marginX="auto">
 
       <ViewIcon boxSize={'16'} />  
       <Heading as="h1" mb={10} fontSize="5xl">  Perspective </Heading> 
@@ -127,7 +127,7 @@ function App() {
         <SearchBox onSubmit={onSubmit} focus={focus}/> 
 
       </Flex>
-
+      
       { validCards > 1 &&
         <Flex flexDirection="row" width="100%" justifyContent="space-between"  marginTop={{base: "10", xl: "0"}}>
 
@@ -152,6 +152,7 @@ function App() {
         )} 
 
       </SimpleGrid>
+
    </Flex>
   )
 }
