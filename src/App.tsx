@@ -117,7 +117,7 @@ function App() {
 
   return (
     
-    <Flex justifyContent="center" border="1px solid black"  minHeight="90vh" alignItems="center" flexDirection="column" minWidth="390px" px={8} maxWidth="50%" marginX="auto">
+    <Flex justifyContent="center" border="1px solid black"  minHeight="90vh" alignItems="center" flexDirection="column" minWidth="50vw" marginX="auto">
 
       <ViewIcon boxSize={'16'} />  
       <Heading as="h1" mb={10} fontSize="5xl">  Perspective </Heading> 
