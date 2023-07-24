@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, SimpleGrid, useColorMode, useToast } from '@chakra-ui/react'
+import { Box, Flex, Heading, SimpleGrid, useToast } from '@chakra-ui/react'
 import './App.css'
 import SearchBox from './components/SearchBox'
 import { ViewIcon } from '@chakra-ui/icons'
@@ -14,13 +14,6 @@ function App() {
   const [countryList, setCountryList] = useState<Country[]>([]);
   const [comparisonTitle, setComparisonTitle] = useState("Default");
   const [validCards, setValidCards] = useState(0);
-
-  
-  /* Hacking color mode to make it light cause I don't know how else to change it */
-
-  const {setColorMode } = useColorMode();
-
-  setColorMode("light")
 
   const toast = useToast();
 
